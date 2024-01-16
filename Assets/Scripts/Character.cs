@@ -2,25 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
+
+
 public class Character : MonoBehaviour
 {
     public AStarAlgorithm pathfinding;
     public Transform leader;
-    public float characterMoveSpeed = 3.0f;
+    public CharacterStats stats;
     public float distanceToLeader = 1.5f;
     public float recalculateInterval = 2.0f;
     public LayerMask obstacleLayer;
 
+    private float currentStamina;
+    private bool isExhausted;
+
     void Start()
     {
-        if (pathfinding != null && leader != null)
+        if (pathfinding != null && leader != null && stats != null)
         {
+            currentStamina = stats.maxStamina;
+            isExhausted = false;
             StartCoroutine(FollowLeader());
             StartCoroutine(RecalculatePath());
         }
         else
         {
-            Debug.LogError("Pathfinding or leader reference is null.");
+            Debug.LogError("Pathfinding, leader, or stats reference is null.");
         }
     }
 
@@ -28,18 +36,55 @@ public class Character : MonoBehaviour
     {
         while (true)
         {
-            Vector3 targetPosition = leader.position - leader.forward * distanceToLeader;
-            targetPosition.y = transform.position.y;
-
-            while (Vector3.Distance(transform.position, targetPosition) > 0.001f)
+            if (leader != null)
             {
-                if (Vector3.Distance(transform.position, leader.position) > distanceToLeader * 1.5f)
+                if (!isExhausted)
                 {
-                    float step = characterMoveSpeed * Time.deltaTime;
-                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
-                }
+                    float targetSpeed = Mathf.Min(stats.speed, leader.GetComponent<Character>().stats.speed);
 
-                yield return null;
+                    Vector3 targetPosition = leader.position - leader.forward * distanceToLeader;
+                    targetPosition.y = transform.position.y;
+
+                    float raycastLength = 2.0f;
+
+                    Ray ray = new Ray(transform.position, transform.forward);
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(ray, out hit, raycastLength))
+                    {
+                        if (hit.collider.CompareTag("Obstacle"))
+                        {
+                            // agility to reduce speed as you approach an obstacle
+                            float distanceToObstacle = hit.distance;
+                            float obstacleAvoidanceSpeed = Mathf.Lerp(stats.speed, stats.agility, distanceToObstacle / raycastLength) * Time.deltaTime;
+                            float finalSpeed = Mathf.Min(targetSpeed, obstacleAvoidanceSpeed);
+
+                            // Decrease stamina depending on speed
+                            currentStamina = Mathf.Max(currentStamina - (finalSpeed / stats.speed) * stats.staminaConsumptionRate * Time.deltaTime, 0.0f);
+
+                            transform.position = Vector3.MoveTowards(transform.position, targetPosition, finalSpeed);
+
+                        }
+                        
+                    }
+                    else
+                    {
+                       
+                        float step = targetSpeed * Time.deltaTime;
+                        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+                        currentStamina = Mathf.Max(currentStamina - stats.staminaConsumptionRate * Time.deltaTime, 0.0f);
+                        //if (currentStamina <= 0) isExhausted = true;
+                    }
+                }
+                else
+                {
+
+                    // Postaæ jest wyczerpana, zmniejsz prêdkoœæ o po³owê
+                    float exhaustedSpeed = stats.speed * 0.5f * Time.deltaTime;
+                    transform.position = Vector3.MoveTowards(transform.position, transform.position, exhaustedSpeed);
+                    currentStamina = Mathf.Min(currentStamina + stats.staminaRegenerationRate * Time.deltaTime, stats.maxStamina);
+                    if (currentStamina >= stats.maxStamina) isExhausted = false;
+                }
             }
 
             yield return null;
@@ -68,7 +113,7 @@ public class Character : MonoBehaviour
             {
                 Vector3 nodePosition = pathfinding.grid.path[i].worldPos;
 
-                Collider[] colliders = new Collider[5]; // rozmiar na podstawie iloœci oczekiwanych postaci
+                Collider[] colliders = new Collider[3]; 
                 int count = Physics.OverlapSphereNonAlloc(nodePosition, 0.5f, colliders, obstacleLayer);
 
                 for (int j = 0; j < count; j++)
@@ -77,7 +122,7 @@ public class Character : MonoBehaviour
                     if (collider != null && collider.transform != transform && collider.transform != leader)
                     {
                         Vector3 avoidanceDirection = (nodePosition - transform.position).normalized;
-                        pathfinding.grid.path[i].worldPos = nodePosition + avoidanceDirection * 2.0f;
+                        pathfinding.grid.path[i].worldPos = nodePosition + avoidanceDirection * 3.0f;
                     }
                 }
             }

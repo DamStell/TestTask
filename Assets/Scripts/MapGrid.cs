@@ -32,11 +32,6 @@ public class MapGrid : MonoBehaviour
                 bool walkable = !Physics.CheckSphere(worldPos, nodeRadius, unwalkableMask);
 
                 int movementPenalty = 0;
-                if (walkable)
-                {
-                    // Add logic for terrain type and movement penalty if needed
-                }
-
                 grid[x, y] = new Node(worldPos, walkable, x, y, movementPenalty);
             }
         }

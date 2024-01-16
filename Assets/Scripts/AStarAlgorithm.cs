@@ -5,18 +5,21 @@ using System.Net;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
+
 public class AStarAlgorithm : MonoBehaviour
 {
     public MapGrid grid;
 
-    public void FindPath(Vector3 startPos, Vector3 targetPos)
+    private void Awake()
     {
         if (grid == null)
         {
-            Debug.LogError("Grid reference is null!");
-            return;
+            Debug.LogError("MapGrid reference is null!");
         }
+    }
 
+    public void FindPath(Vector3 startPos, Vector3 targetPos)
+    {
         Node startNode = grid.GetNodeFromWorldPoint(startPos);
         Node targetNode = grid.GetNodeFromWorldPoint(targetPos);
 
@@ -54,6 +57,7 @@ public class AStarAlgorithm : MonoBehaviour
                 }
 
                 double newCostToNeighbor = currentNode.GCost + currentNode.DistanceToNode(neighbor) + neighbor.movementPenalty;
+
                 if (newCostToNeighbor < neighbor.GCost || !openSet.Contains(neighbor))
                 {
                     neighbor.GCost = newCostToNeighbor;
@@ -67,21 +71,27 @@ public class AStarAlgorithm : MonoBehaviour
                 }
             }
         }
+
+        Debug.LogError("Cannot find a path.");
     }
 
-    void RetracePath(Node startNode, Node targetNode)
+    List<Node> RetracePath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
-        Node currentNode = targetNode;
+        Node currentNode = endNode;
 
         while (currentNode != startNode)
         {
             path.Add(currentNode);
             currentNode = currentNode.parent;
         }
-        path.Reverse();
 
+        path.Reverse();
         grid.path = path;
+        return path;
     }
+
+    
+    
 }
 
