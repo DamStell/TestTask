@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2777388739361394851}
   - component: {fileID: 1812567353344854999}
   - component: {fileID: 8593517962028601869}
-  - component: {fileID: 9000036960015546390}
   - component: {fileID: 3081575696084495531}
   m_Layer: 0
   m_Name: Character1
@@ -109,25 +108,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9000036960015546390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5985252521000828810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e0c4fc88c6dc884ca789d44aea17de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathfinding: {fileID: 0}
-  leader: {fileID: 5679461007751320118}
-  verticalOffset: 1
-  clickCooldown: 0.5
-  leaderMoveSpeed: 5
-  leaderTurnSpeed: 0
-  leaderStamina: 0
 --- !u!114 &3081575696084495531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +115,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5985252521000828810}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22fe1fc6db00055489b502b697067fee, type: 3}
   m_Name: 
@@ -152,4 +132,4 @@ MonoBehaviour:
   recalculateInterval: 2
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128

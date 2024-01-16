@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6941982125884136848}
   - component: {fileID: 7850886113360823914}
   - component: {fileID: 5770377960585942113}
-  - component: {fileID: 4894779850443261526}
   m_Layer: 0
   m_Name: Character3
   m_TagString: Character
@@ -133,23 +132,4 @@ MonoBehaviour:
   recalculateInterval: 2
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 64
---- !u!114 &4894779850443261526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1431506685557341109}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e0c4fc88c6dc884ca789d44aea17de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathfinding: {fileID: 0}
-  leader: {fileID: 0}
-  verticalOffset: 0.5
-  clickCooldown: 0.5
-  leaderMoveSpeed: 5
-  leaderTurnSpeed: 0
-  leaderStamina: 0
+    m_Bits: 128

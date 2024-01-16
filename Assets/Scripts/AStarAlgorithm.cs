@@ -90,8 +90,5 @@ public class AStarAlgorithm : MonoBehaviour
         grid.path = path;
         return path;
     }
-
-    
-    
 }
 

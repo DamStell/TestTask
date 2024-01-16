@@ -39,6 +39,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ChangeLeader(Transform newLeader)
+    {
+        leader = newLeader;
+        StopAllCoroutines();
+        StartCoroutine(MoveLeaderAlongPath(pathfinding.grid.path));
+        
+    }
     void CalculateAndCheckPath(Vector3 targetPosition)
     {
         pathfinding.grid.path = null; // Anuluj poprzedni¹ œcie¿kê

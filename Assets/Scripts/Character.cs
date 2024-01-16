@@ -32,11 +32,19 @@ public class Character : MonoBehaviour
         }
     }
 
+    public void ChangeLeader(Transform newLeader)
+    {
+        leader = newLeader;
+        StopAllCoroutines();
+        StartCoroutine(FollowLeader());
+        StartCoroutine(RecalculatePath());
+    }
+
     IEnumerator FollowLeader()
     {
         while (true)
         {
-            if (leader != null)
+            if (leader != null&& transform != leader)
             {
                 if (!isExhausted)
                 {
