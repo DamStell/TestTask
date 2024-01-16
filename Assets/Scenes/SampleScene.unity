@@ -731,11 +731,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!4 &735972348 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7799515156323390897, guid: 5133296e2d9b52d4a82f3a649c5baebc, type: 3}
-  m_PrefabInstance: {fileID: 8244999941794524702}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &735972349 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5770377960585942113, guid: 5133296e2d9b52d4a82f3a649c5baebc, type: 3}
@@ -786,9 +781,6 @@ MonoBehaviour:
     maxStamina: 0
     staminaRegenerationRate: 0
     staminaConsumptionRate: 0
-  leaderMoveSpeed: 0
-  leaderTurnSpeed: 0
-  leaderStamina: 0
 --- !u!4 &777783136
 Transform:
   m_ObjectHideFlags: 0
@@ -954,8 +946,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultStats:
-    speed: 5
-    agility: 10
+    speed: 7
+    agility: 4
     maxStamina: 50
     staminaRegenerationRate: 7
     staminaConsumptionRate: 15
@@ -1103,10 +1095,6 @@ MonoBehaviour:
     m_Bits: 64
   nodeRadius: 0.5
   gridWorldSize: {x: 50, y: 50}
-  characters:
-  - {fileID: 798828823}
-  - {fileID: 1241255300}
-  - {fileID: 735972348}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,7 +1106,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1200,18 +1187,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1143649843}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &963194229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7800bf9a558e6f541be6bc91910c79c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &980880280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,6 +1437,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1143649843}
+  - component: {fileID: 1143649844}
   m_Layer: 0
   m_Name: CameraPivot
   m_TagString: Untagged
@@ -1485,6 +1461,21 @@ Transform:
   - {fileID: 963194228}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 30, y: 45, z: 0}
+--- !u!114 &1143649844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143649842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7800bf9a558e6f541be6bc91910c79c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 777783135}
+  smoothSpeed: 0.5
+  rotationSpeed: 5
 --- !u!114 &1241255296 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8043054112151544313, guid: 613966de3bec2e446ab6e0ad45a0ae0b, type: 3}
@@ -1496,11 +1487,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22fe1fc6db00055489b502b697067fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1241255300 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6852634059935158710, guid: 613966de3bec2e446ab6e0ad45a0ae0b, type: 3}
-  m_PrefabInstance: {fileID: 96406872430609918}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1302039570
 GameObject:
   m_ObjectHideFlags: 0
@@ -1966,7 +1952,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 410900384}
     - target: {fileID: 8043054112151544313, guid: 613966de3bec2e446ab6e0ad45a0ae0b, type: 3}
+      propertyPath: distanceToLeader
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8043054112151544313, guid: 613966de3bec2e446ab6e0ad45a0ae0b, type: 3}
+      propertyPath: sharedPathfinding
+      value: 
+      objectReference: {fileID: 410900384}
+    - target: {fileID: 8043054112151544313, guid: 613966de3bec2e446ab6e0ad45a0ae0b, type: 3}
       propertyPath: obstacleLayer.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
+    - target: {fileID: 8043054112151544313, guid: 613966de3bec2e446ab6e0ad45a0ae0b, type: 3}
+      propertyPath: characterLayer.m_Bits
       value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1991,7 +1989,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 410900384}
     - target: {fileID: 3081575696084495531, guid: 1c994f386a39ec842acf377dbdd8a279, type: 3}
+      propertyPath: distanceToLeader
+      value: 4.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081575696084495531, guid: 1c994f386a39ec842acf377dbdd8a279, type: 3}
+      propertyPath: sharedPathfinding
+      value: 
+      objectReference: {fileID: 410900384}
+    - target: {fileID: 3081575696084495531, guid: 1c994f386a39ec842acf377dbdd8a279, type: 3}
       propertyPath: obstacleLayer.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081575696084495531, guid: 1c994f386a39ec842acf377dbdd8a279, type: 3}
+      propertyPath: characterLayer.m_Bits
       value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 5679461007751320118, guid: 1c994f386a39ec842acf377dbdd8a279, type: 3}
@@ -2072,7 +2082,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 410900384}
     - target: {fileID: 5770377960585942113, guid: 5133296e2d9b52d4a82f3a649c5baebc, type: 3}
+      propertyPath: sharedPathfinding
+      value: 
+      objectReference: {fileID: 410900384}
+    - target: {fileID: 5770377960585942113, guid: 5133296e2d9b52d4a82f3a649c5baebc, type: 3}
       propertyPath: obstacleLayer.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
+    - target: {fileID: 5770377960585942113, guid: 5133296e2d9b52d4a82f3a649c5baebc, type: 3}
+      propertyPath: characterLayer.m_Bits
       value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 7799515156323390897, guid: 5133296e2d9b52d4a82f3a649c5baebc, type: 3}
