@@ -22,7 +22,6 @@ public class ButtonManager : MonoBehaviour
         leader3Button.onClick.AddListener(() => ChangeLeader(2));
 
     }
-
     void ChangeLeader(int leaderIndex)
     {
         if (gameManager != null && playerController != null && leaderIndex >= 0 && leaderIndex < gameManager.characters.Count)
